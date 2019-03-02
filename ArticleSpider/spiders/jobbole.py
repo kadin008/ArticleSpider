@@ -106,7 +106,7 @@ class JobboleSpider(scrapy.Spider):
         article_item['url_object_id'] = get_md5(response.url)
         article_item['title'] = title
         try:
-            create_date = datetime.datetime.strftime(create_date,'%Y/%m/%d').date()
+            create_date = datetime.datetime.strftime(create_date, '%Y/%m/%d').date()
         except Exception as e:
             create_date = datetime.datetime.now().date()
         article_item['create_date'] = create_date
