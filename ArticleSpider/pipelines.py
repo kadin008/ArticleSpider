@@ -70,8 +70,8 @@ class MysqlTwistedPipeline(object):
         print(failure)
 
     def do_insert(self, cursor, item):
-        insert_sql = """ INSERT INTO jobbole_article ( title, create_date, url, url_object_id, front_image_url, comment_nums, fav_nums, praise_nums, tags, content ) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
-        cursor.execute(insert_sql, (item['title'], item['create_date'], item['url'], item['url_object_id'], item['front_image_url'], item['comment_nums'], item['fav_nums'], item['praise_nums'], item['tags'], item['content']))
+        insert_sql = """ INSERT INTO jobbole_article ( title, create_date, url, url_object_id, front_image_url, comment_nums, fav_nums, praise_nums, tags, content, front_image_path ) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
+        cursor.execute(insert_sql, (item['title'], item['create_date'], item['url'], item['url_object_id'], item['front_image_url'], item['comment_nums'], item['fav_nums'], item['praise_nums'], item['tags'], item['content'], item["front_image_path"]))
 
 
 # 调用scrapy提供的json export导出json 文件
@@ -92,8 +92,9 @@ class JsonExporterPipeline(object):
 
 class ArticleImagePipeline(ImagesPipeline):
     def item_completed(self, results, item, info):
-        for ok, value in results:
-            image_file_path = value["path"]
-        item["front_image_path"] = image_file_path
+        if 'front_image_url' in item:
+            for ok, value in results:
+                image_file_path = value["path"]
+            item["front_image_path"] = image_file_path
 
         return item
