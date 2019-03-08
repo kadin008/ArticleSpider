@@ -47,6 +47,7 @@ class ZhihuSpider(scrapy.Spider):
             if match_obj:
                 request_url = match_obj.group(1)
                 yield scrapy.Request(request_url, headers=self.headers, callback=self.parse_question)
+                break
             else:
                 yield scrapy.Request(url, headers=self.headers, callback=self.parse)
 
