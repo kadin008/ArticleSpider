@@ -145,4 +145,4 @@ class ZhihuSpider(scrapy.Spider):
         if 'msg' in text_json and text_json['msg'] == '登录成功':
             for url in self.start_urls:
                 yield scrapy.Request(url, dont_filter=True, headers=self.headers)
-        pass
+
