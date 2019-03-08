@@ -102,3 +102,6 @@ MYSQL_HOST = 'rdsv148e9hymz8rj85wqo.mysql.rds.aliyuncs.com'
 MYSQL_DBNAME = 'article_spider'
 MYSQL_USER = 'kadin008'
 MYSQL_PASSWORD = 'Admin@2010'
+
+SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+SQL_DATE_FORMAT = "%Y-%m-%d"

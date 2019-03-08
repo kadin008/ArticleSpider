@@ -73,8 +73,8 @@ class ZhihuSpider(scrapy.Spider):
                 question_id = int(match_obj.group(2))
             item_loader = ItemLoader(item=ZhiHuQuestionItem(), response=response)
             # item_loader.add_css('title', '.zh-qusetion-title h2 a::text')
-            item_loader.add_xpath('title', '//*[@class="zh-qusetion-title"]/h2/a/text() |'
-                                           ' //*[@class="zh-qusetion-title"]/h2/span/text()')
+            item_loader.add_xpath('title', '//*[@id="zh-qusetion-title"]/h2/a/text() |'
+                                           ' //*[@id="zh-qusetion-title"]/h2/span/text()')
             item_loader.add_css('content', '#zh-qusetion-detail')
             item_loader.add_value('url', response.url)
             item_loader.add_value('zhihu_id', question_id)
