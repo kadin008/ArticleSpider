@@ -51,6 +51,27 @@ def get_index():
     print('OK')
 
 
+def get_captcha():
+    import time
+    t = str(int(time.time()*1000))
+    captcha_url = "https://www.zhihu.com/captcha.gif?r={0}&type=login".format(t)
+    t = session.get(captcha_url, headers=header)
+    with open("captcha.jpg", "wb") as f:
+        f.write(t.content)
+        f.close()
+
+    from PIL import Image
+    try:
+        im = Image.open('captcha.jpg')
+        im.show()
+        im.close()
+    except:
+        pass
+
+    captcha = input("输入验证码\n>")
+    return captcha
+
+
 def zhihu_login(account, password):
     if re.match('^1\d{10}', account):
         print('手机号码登录')
@@ -58,7 +79,8 @@ def zhihu_login(account, password):
         post_data = {
             '_xsrf': get_xsrf(),
             'phone_num': account,
-            'password': password
+            'password': password,
+            'captcha': get_captcha()
         }
         # response_text = session.post(post_url, data=post_data, headers=header)
         # session.cookies.save()
@@ -69,7 +91,8 @@ def zhihu_login(account, password):
             post_data = {
                 '_xsrf': get_xsrf(),
                 'email': account,
-                'password': password
+                'password': password,
+                'captcha': get_captcha()
             }
     response_text = session.post(post_url, data=post_data, headers=header)
     session.cookies.save()
