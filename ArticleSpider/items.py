@@ -226,8 +226,9 @@ class LagouJobItem(scrapy.Item):
             ON DUPLICATE KEY UPDATE salary=VALUES(salary), job_desc=VALUES(job_desc)
         """
         params = (
-            self['title'], self['url'],  self['url_object_id'], self['salary'], self['work_years'], self['degree_need'], self['job_type'],
-            self['publish_time'], self['job_advantage'], self['job_desc'], self['job_addr'], self['company_name'],
-            self['company_url'], self['tags'], self['crawl_time'].strftime(SQL_DATETIME_FORMAT), self['job_city']
+            self['title'], self['url'],  self['url_object_id'], self['salary'], self['work_years'], self['degree_need'],
+            self['job_type'], self['publish_time'], self['job_advantage'], self['job_desc'], self['job_addr'],
+            self['company_name'], self['company_url'], self['tags'], self['crawl_time'].strftime(SQL_DATETIME_FORMAT),
+            self['job_city']
         )
         return insert_sql, params
