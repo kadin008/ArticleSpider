@@ -1,19 +1,29 @@
 # -*- coding: utf-8 -*-
 import scrapy
-import re
+
 from scrapy.http import Request
 from urllib import parse
 from ArticleSpider.items import JobBoleArticleItem, ArticleItemLoader
 from ArticleSpider.utils.common import get_md5
-from scrapy.loader import ItemLoader
 from ArticleSpider.pipelines import ArticleImagePipeline
-import datetime
+from selenium import webdriver
+from scrapy.xlib.pydispatch import dispatcher
+from scrapy import signals
 
 
 class JobboleSpider(scrapy.Spider):
     name = 'jobbole'
     allowed_domains = ['blog.jobbole.com']
     start_urls = ['http://blog.jobbole.com/all-posts/']
+
+    def __init__(self):
+        self.browser = webdriver.Chrome(executable_path='E:/git/chromedriver_win32 (1)/chromedriver.exe')
+        super(JobboleSpider, self).__init__()
+        dispatcher.connect(self.spider_closed, signals.spider_closed)
+
+    def spider_closed(self, spider):
+        print('spider closed')
+        self.browser.quit()
 
     def parse(self, response):
         # 1.获取文章列表页中的文章url并交给scrapy下载后并进行解析
