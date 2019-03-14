@@ -138,7 +138,7 @@ from scrapy.http import HtmlResponse
 
 class JSPageMiddleware(object):
     def process_request(self, request, spider):
-        if spider.name == 'jobbole':
+        if spider.name == 'zhihu':
             # browser = webdriver.Chrome(executable_path='E:/git/chromedriver_win32 (1)/chromedriver.exe')
             self.browser.get(request.url)
             import time
